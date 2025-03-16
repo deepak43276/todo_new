@@ -1,0 +1,225 @@
+/* ✅ Reset default margin & padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ✅ Set base font size */
+html {
+  font-size: 18px;
+}
+
+/* ✅ Apply global styles */
+body {
+  min-height: 100vh;
+  font-family: 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #e0e7ff;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* ✅ Todo List Container */
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh; /* Adjusted for better fit */
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* ✅ Header (Fixed & Styled) */
+header {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4a90e2, #50e3c2);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  font-weight: 700;
+}
+
+/* ✅ Main Content (Scrollable) */
+main {
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 100vh; /* Prevents overflowing */
+  padding: 1rem;
+}
+
+/* ✅ Footer */
+footer {
+  width: 100%;
+  padding: 1.5rem;
+  background: #50e3c2;
+  color: white;
+  display: grid;
+  place-content: center;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ List Container */
+ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* ✅ Individual Item Styling */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 0.8rem 0;
+  background-color: #f9faff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.item:hover {
+  background-color: #eff6fc;
+  transform: translateY(-5px);
+}
+
+/* ✅ Checkbox Styling */
+.item input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin-right: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.item input[type="checkbox"]:checked {
+  background-color: #50e3c2;
+  border: none;
+}
+
+.item input[type="checkbox"]:focus {
+  outline: none;
+  transform: scale(1.2);
+}
+
+/* ✅ Item Label (Strike-through for checked items) */
+.item label {
+  font-size: 1.1rem;
+  flex-grow: 1;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.item input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: #9b9b9b;
+}
+
+/* ✅ Delete Button */
+.item svg {
+  width: 35px;
+  height: 35px;
+  color: #50e3c2;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.item svg:hover {
+  color: #d84b3a;
+}
+
+/* ✅ Buttons */
+button {
+  height: 50px;
+  min-width: 50px;
+  padding: 1rem 3rem;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #50e3c2, #4a90e2);
+  color: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+}
+
+button:focus,
+button:hover {
+  background: linear-gradient(135deg, #4a90e2, #50e3c2);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+/* ✅ Forms */
+.searchForm, .addForm {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Input Fields */
+.searchForm input[type='text'],
+.addForm input[type='text'] {
+  flex-grow: 1;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-right: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* ✅ Input Focus Effect */
+.searchForm input[type='text']:focus,
+.addForm input[type='text']:focus {
+  border-color: #50e3c2;
+}
+
+.searchForm input[type='text']::placeholder,
+.addForm input[type='text']::placeholder {
+  color: #aaa;
+}
+
+/* ✅ Footer Text */
+footer p {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+}
