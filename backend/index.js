@@ -1,65 +1,56 @@
-const express=require('express')
+import express from 'express'
+import serverless from 'serverless-http'
+import mongoose from 'mongoose'
+import cors from 'cors'
+import TodoModel from '../models/Todo.js'
 
-const mongoose=require('mongoose')
-const TodoModel = require('./models/Todo')
-const cors=require('cors')
-
-const app = express();
-
+const app = express()
 app.use(cors())
 app.use(express.json())
 
+const uri = process.env.MONGODB_URI
 
-mongoose.connect('mongodb://127.0.0.1:27017/test', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+let conn = null
+async function connectDB() {
+  if (!conn) {
+    conn = await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+  }
+}
 
-// Fetch all todos
+// Routes
 app.get('/get', async (req, res) => {
-    try {
-        const todos = await TodoModel.find();
-        res.json(todos);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+  await connectDB()
+  const todos = await TodoModel.find()
+  res.json(todos)
+})
 
-// Add new todo
 app.post('/add', async (req, res) => {
-    try {
-        const newTodo = new TodoModel({ item: req.body.item, checked: req.body.checked || false});
-        await newTodo.save();
-        res.json(newTodo);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+  await connectDB()
+  const newTodo = new TodoModel({
+    item: req.body.item,
+    checked: req.body.checked || false,
+  })
+  await newTodo.save()
+  res.json(newTodo)
+})
 
 app.patch('/update/:id', async (req, res) => {
-    try {
-        const updatedTodo = await TodoModel.findByIdAndUpdate(
-            req.params.id, 
-            { checked: req.body.checked }, 
-            { new: true }
-        );
-        res.json(updatedTodo);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-// Delete a todo
-app.delete('/delete/:id', async (req, res) => {
-    try {
-        await TodoModel.findByIdAndDelete(req.params.id);
-        res.json({ message: "Deleted successfully" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.listen(3001,()=> {
-    console.log('listening on http://localhost:3001')
+  await connectDB()
+  const updated = await TodoModel.findByIdAndUpdate(
+    req.params.id,
+    { checked: req.body.checked },
+    { new: true }
+  )
+  res.json(updated)
 })
+
+app.delete('/delete/:id', async (req, res) => {
+  await connectDB()
+  await TodoModel.findByIdAndDelete(req.params.id)
+  res.json({ message: 'Deleted successfully' })
+})
+
+export default serverless(app)
